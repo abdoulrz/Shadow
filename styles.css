@@ -1,0 +1,156 @@
+:root {
+    --neumorphic-bg: #e0e5ec;
+    --neumorphic-shadow-light: #ffffff;
+    --neumorphic-shadow-dark: #a3b1c6;
+    --neumorphic-text-main: #374151;
+    --neumorphic-text-accent: #dd6b20;
+    --neumorphic-text-subtle: #525c6f;
+}
+
+body {
+    font-family: "Quintessential", serif; 
+    background-color: var(--neumorphic-bg);
+    color: var(--neumorphic-text-main);
+}
+.font-cinzel { font-family: 'Cinzel', serif; } 
+
+.content-wrapper {
+     background-color: var(--neumorphic-bg); 
+}
+
+.neumorphic-card-outset {
+    background-color: var(--neumorphic-bg);
+    border-radius: 20px;
+    box-shadow: 8px 8px 16px var(--neumorphic-shadow-dark), 
+                -8px -8px 16px var(--neumorphic-shadow-light);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.stamp-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://storage.googleapis.com/project-1234-files/carl-jung-and-the-shadow-an-introduction.jpg-4c5a143c-e33b-4cbe-8738-b9b06ea49f90');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.1; 
+    mix-blend-mode: multiply;
+    z-index: 0;
+}
+
+.neumorphic-image {
+    background-color: var(--neumorphic-bg);
+    box-shadow: 4px 4px 8px var(--neumorphic-shadow-dark), 
+                -4px -4px 8px var(--neumorphic-shadow-light);
+}
+
+.neumorphic-inset {
+    background-color: var(--neumorphic-bg);
+    border-radius: 12px;
+    box-shadow: inset 5px 5px 10px var(--neumorphic-shadow-dark), 
+                inset -5px -5px 10px var(--neumorphic-shadow-light);
+    padding: 0.75rem 1rem;
+    border: 1px solid transparent;
+}
+.neumorphic-inset-darker {
+     background-color: #d1d9e6;
+     border-radius: 12px;
+     box-shadow: inset 3px 3px 7px #b8c1d1, 
+                 inset -3px -3px 7px #eef7ff;
+     padding: 1rem;
+}
+
+.neumorphic-button {
+    background-color: var(--neumorphic-bg);
+    border-radius: 10px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    color: var(--neumorphic-text-accent);
+    box-shadow: 5px 5px 10px var(--neumorphic-shadow-dark), 
+                -5px -5px 10px var(--neumorphic-shadow-light);
+    transition: all 0.2s ease-in-out;
+}
+.neumorphic-button:hover {
+    box-shadow: 3px 3px 6px var(--neumorphic-shadow-dark), 
+                -3px -3px 6px var(--neumorphic-shadow-light);
+    color: #c05621;
+}
+.neumorphic-button:active {
+    box-shadow: inset 2px 2px 5px var(--neumorphic-shadow-dark), 
+                inset -2px -2px 5px var(--neumorphic-shadow-light);
+    color: #ab4d1d;
+}
+
+.neumorphic-button-secondary {
+    background-color: var(--neumorphic-bg);
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    color: var(--neumorphic-text-subtle);
+     box-shadow: 3px 3px 6px var(--neumorphic-shadow-dark), 
+                -3px -3px 6px var(--neumorphic-shadow-light);
+    transition: all 0.2s ease-in-out;
+}
+.neumorphic-button-secondary:hover {
+     box-shadow: 1px 1px 3px var(--neumorphic-shadow-dark), 
+                -1px -1px 3px var(--neumorphic-shadow-light);
+    color: var(--neumorphic-text-main);
+}
+ .neumorphic-button-secondary:active {
+    box-shadow: inset 1px 1px 3px var(--neumorphic-shadow-dark), 
+                inset -1px -1px 3px var(--neumorphic-shadow-light);
+}
+
+nav ul li a.nav-link {
+    color: var(--neumorphic-text-subtle);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+    text-shadow: 1px 1px 1px rgba(255,255,255,0.7);
+}
+nav ul li a.nav-link:hover {
+    color: var(--neumorphic-text-accent);
+    background-color: var(--neumorphic-bg);
+     box-shadow: 3px 3px 6px var(--neumorphic-shadow-dark), 
+                -3px -3px 6px var(--neumorphic-shadow-light);
+}
+nav ul li a.neumorphic-nav-active {
+    color: var(--neumorphic-text-accent) !important;
+    font-weight: 700;
+    background-color: var(--neumorphic-bg);
+    box-shadow: inset 3px 3px 6px var(--neumorphic-shadow-dark), 
+                inset -3px -3px 6px var(--neumorphic-shadow-light);
+}
+
+select, textarea, input[type="text"], input[type="email"], input[type="password"] { 
+    font-family: "Quintessential", serif;
+    color: var(--neumorphic-text-main);
+}
+textarea::placeholder, input::placeholder {
+    color: var(--neumorphic-text-subtle);
+    opacity: 0.8;
+}
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #d1d9e6; }
+::-webkit-scrollbar-thumb { background: #b8c1d1; border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: #a3b1c6; }
+
+#userIdDisplay { color: var(--neumorphic-text-subtle); opacity: 0.7; }
+header p { color: var(--neumorphic-text-main); }
+footer p { color: var(--neumorphic-text-subtle); }
+#loadingIndicator div { color: var(--neumorphic-text-accent); }
+
+/* Language Switcher Styles */
+.lang-btn.active {
+    box-shadow: inset 2px 2px 5px var(--neumorphic-shadow-dark), 
+                inset -2px -2px 5px var(--neumorphic-shadow-light);
+    color: var(--neumorphic-text-accent);
+    font-weight: bold;
+}
