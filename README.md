@@ -22,8 +22,7 @@ A safe, personal space to record your reflections. Use a variety of prompts insp
 
 * **Dynamic Multilingual Support:** Seamlessly switch between English, French, and Spanish with real-time, on-the-fly translations powered by the Google Translate API.
 
-#### Secure Authentication: 
-    Choose to create a private account with your email and password or explore the app's features using the anonymous sign-in option.
+* **Secure Authentication:** Choose to create a private account with your email and password or explore the app's features using the anonymous sign-in option.
 
 ### Who Is This For?
 * _Individuals committed to self-discovery and personal growth._
