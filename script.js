@@ -49,17 +49,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function cacheInitialEnglishText() {
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
-            if (!translationsCache.en[key]) {
-                 translationsCache.en[key] = el.innerHTML;
-            }
+            translationsCache.en[key] = el.innerHTML;
+            //if (!translationsCache.en[key]) {}
         });
 
         // Cache placeholder text
         document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
             const key = el.getAttribute('data-i18n-placeholder');
-            if (!translationsCache.en[key]) {
-                translationsCache.en[key] = el.getAttribute('placeholder');
-            }
+            translationsCache.en[key] = el.getAttribute('placeholder');
+            //if (!translationsCache.en[key]) {}
         });
     }
     async function translateText(texts, targetLang) {
@@ -161,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     //environment variable for Firebase token
-    const FIREBASE_TOKEN = "1//031-bFEjtT4DQCgYIARAAGAMSNwF-L9IrSq8xqtQjttEJJXzbKq9eklhZ4cL10MGFYwynzoCGyoRHxKedfdLuNUk1K1Dw2Wa3miE"
+    //const FIREBASE_TOKEN = "1//031-bFEjtT4DQCgYIARAAGAMSNwF-L9IrSq8xqtQjttEJJXzbKq9eklhZ4cL10MGFYwynzoCGyoRHxKedfdLuNUk1K1Dw2Wa3miE"
 
 
 
@@ -396,18 +394,9 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
 
-        const journalPromptSelect = document.getElementById('journalPrompt');
-        const journalEntryTextarea = document.getElementById('journalEntry');
+        //const journalPromptSelect = document.getElementById('journalPrompt');
+        //const journalEntryTextarea = document.getElementById('journalEntry');
         
-        if (journalPromptSelect && journalEntryTextarea) {
-            journalPromptSelect.addEventListener('change', (e) => {
-                if (e.target.value && journalEntryTextarea.value.trim() === '') {
-                    journalEntryTextarea.value = `Prompt: ${e.target.value}\n\n`;
-                } else if (e.target.value) {
-                     journalEntryTextarea.value = `Prompt: ${e.target.value}\n\n${journalEntryTextarea.value.split('\n\n').slice(1).join('\n\n')}`;
-                }
-            });
-        }
 
         document.getElementById('saveJournalEntry').addEventListener('click', saveJournalEntry);
     }
@@ -527,6 +516,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const greeneForm = document.getElementById('greeneRepressionForm');
         if (greeneForm) greeneForm.addEventListener('submit', (e) => handleExerciseSubmit(e, 'greeneRepressionForm', 'The Law of Repression'));
         
+        // ** FIX: Cache new English text and re-apply language settings **
+        cacheInitialEnglishText();
+        setLanguage(currentLang);
+
+
         loadingIndicator.classList.add('hidden');
     }
 
@@ -538,15 +532,15 @@ function getRootExerciseHTML() {
         <form id="rootExerciseForm" class="space-y-6">
             <div>
                 <label for="trigger" class="block text-xl font-cinzel text-orange-500 mb-2" data-i18n="rootQ1">1. What is triggering my shadow right now?</label>
-                <textarea name="trigger" class="w-full p-3 neumorphic-inset text-gray-700 h-24 focus:outline-none" placeholder="Describe the situation, person, or event..."></textarea>
+                <textarea name="trigger" class="w-full p-3 neumorphic-inset text-gray-700 h-24 focus:outline-none" data-i18n-placeholder="Describe the situation, person, or event..."></textarea>
             </div>
             <div>
                 <label for="thoughts" class="block text-xl font-cinzel text-orange-500 mb-2" data-i18n="rootQ2">2. What thoughts am I having?</label>
-                <textarea name="thoughts" class="w-full p-3 neumorphic-inset text-gray-700 h-24 focus:outline-none" placeholder="List the thoughts, judgments, or assumptions..."></textarea>
+                <textarea name="thoughts" class="w-full p-3 neumorphic-inset text-gray-700 h-24 focus:outline-none" data-i18n-placeholder="List the thoughts, judgments, or assumptions..."></textarea>
             </div>
             <div>
                 <label for="emotions" class="block text-xl font-cinzel text-orange-500 mb-2" data-i18n="rootQ3">3. What emotions am I experiencing?</label>
-                <textarea name="emotions" class="w-full p-3 neumorphic-inset text-gray-700 h-24 focus:outline-none" placeholder="Name the feelings (e.g., anger, sadness, fear, shame)..."></textarea>
+                <textarea name="emotions" class="w-full p-3 neumorphic-inset text-gray-700 h-24 focus:outline-none" data-i18n-placeholder="Name the feelings (e.g., anger, sadness, fear, shame)..."></textarea>
             </div>
             <button type="submit" class="neumorphic-button text-gray-800 font-bold py-3 px-6" data-i18n="saveReflection">Save Reflection</button>
             <div id="exerciseStatus" class="mt-4 text-green-600"></div>
@@ -562,15 +556,15 @@ function getInnerChildExerciseHTML() {
         <form id="innerChildExerciseForm" class="space-y-6">
             <div>
                 <p class="text-xl font-cinzel text-orange-500 mb-2" data-i18n="icQ1">1. Visualize Your Inner Child</p>
-                <textarea name="visualization" class="w-full p-3 neumorphic-inset text-gray-700 h-20 focus:outline-none" placeholder="Describe your inner child..."></textarea>
+                <textarea name="visualization" class="w-full p-3 neumorphic-inset text-gray-700 h-20 focus:outline-none" data-i18n-placeholder="Describe your inner child..."></textarea>
             </div>
             <div>
                 <label for="needs" class="block text-xl font-cinzel text-orange-500 mb-2" data-i18n="icQ2">2. What does your inner child need from you right now?</label>
-                <textarea name="needs" class="w-full p-3 neumorphic-inset text-gray-700 h-20 focus:outline-none" placeholder="My inner child needs..."></textarea>
+                <textarea name="needs" class="w-full p-3 neumorphic-inset text-gray-700 h-20 focus:outline-none" data-i18n-placeholder="My inner child needs..."></textarea>
             </div>
             <div>
                 <label for="affirmation" class="block text-xl font-cinzel text-orange-500 mb-2" data-i18n="icQ3">3. Offer an Affirmation or Message</label>
-                <textarea name="affirmation" class="w-full p-3 neumorphic-inset text-gray-700 h-24 focus:outline-none" placeholder="Example: 'You are safe. You are loved. It's okay to feel what you feel.'"></textarea>
+                <textarea name="affirmation" class="w-full p-3 neumorphic-inset text-gray-700 h-24 focus:outline-none" data-i18n-placeholder="Example: 'You are safe. You are loved. It's okay to feel what you feel.'"></textarea>
             </div>
             <button type="submit" class="neumorphic-button text-gray-800 font-bold py-3 px-6" data-i18n="saveReflection">Save Reflection</button>
             <div id="exerciseStatus" class="mt-4 text-green-600"></div>
@@ -642,14 +636,14 @@ function getEftExerciseHTML() {
         <div class="flex flex-col md:flex-row gap-8 items-start">
             <div class="md:w-2/3 text-gray-700 space-y-4 text-lg leading-relaxed">
                 <p data-i18n="eftDesc1">Emotional Freedom Technique (EFT), or tapping, combines acupressure with modern psychology. The "Setup Statement" is the first step and acknowledges the issue while affirming self-acceptance.</p>
-                <p><strong data-i18n="eftStep1">1. Identify the Problem:</strong> Clearly define the issue you want to work on. This could be an emotion (anxiety), a physical discomfort, or a limiting belief ("I'm not good enough").</p>
-                <p><strong data-i18n="eftStep2">2. Rate the Intensity:</strong> On a scale of 0 to 10 (where 10 is the highest), how strong is this feeling or belief right now?</p>
-                <p><strong data-i18n="eftStep3">3. Create Your Setup Statement:</strong> The standard format is:</p>
+                <p data-i18n="eftStep11"><strong data-i18n="eftStep1">1. Identify the Problem:</strong> Clearly define the issue you want to work on. This could be an emotion (anxiety), a physical discomfort, or a limiting belief ("I'm not good enough").</p>
+                <p data-i18n="eftStep21"><strong data-i18n="eftStep2">2. Rate the Intensity:</strong> On a scale of 0 to 10 (where 10 is the highest), how strong is this feeling or belief right now?</p>
+                <p data-i18n="eftStep31"><strong data-i18n="eftStep3">3. Create Your Setup Statement:</strong> The standard format is:</p>
                 <p class="italic p-4 neumorphic-inset-darker rounded-md" data-i18n="eftQuote">"Even though I have this [problem/issue/feeling], I deeply and completely accept myself."</p>
-                <p><strong data-i18n="eftHowTo">How to Use It:</strong> While gently and continuously tapping on the "Karate Chop" point (shown in the diagram), repeat your Setup Statement three times with feeling. This prepares you for the full tapping sequence.</p>
+                <p data-i18n="eftHowTo1"><strong data-i18n="eftHowTo">How to Use It:</strong> While gently and continuously tapping on the "Karate Chop" point (shown in the diagram), repeat your Setup Statement three times with feeling. This prepares you for the full tapping sequence.</p>
             </div>
             <div class="md:w-1/3 mt-4 md:mt-0">
-                <img src="https://storage.googleapis.com/project-1234-files/ETF%20taping.jpg-24d48d5f-c9bc-4bdb-acc0-b6ff2e189b74" alt="EFT Tapping Points Diagram" class="w-full h-auto rounded-2xl neumorphic-image p-2">
+                <img src="./Media/ETF taping.jpg" alt="EFT Tapping Points Diagram" class="w-full h-auto rounded-2xl neumorphic-image p-2">
             </div>
         </div>
         <button class="back-to-exercises mt-8 neumorphic-button-secondary text-gray-700 font-semibold py-2 px-4" data-i18n="backToExercises">Back to Exercises</button>
@@ -661,7 +655,7 @@ function getGroundingExerciseHTML() {
         <h3 class="text-3xl font-cinzel text-orange-600 mb-6" data-i18n="groundingTitle">Simple Grounding Technique (5-4-3-2-1 Method)</h3>
         <div class="text-gray-700 space-y-4 text-lg leading-relaxed">
             <p data-i18n="groundingDesc1">This technique helps you connect with the present moment by engaging your senses. Find a comfortable position, either sitting or standing.</p>
-            <p><strong data-i18n="groundingDesc2">Take a few deep breaths to begin.</strong> Inhale slowly through your nose, feel your abdomen expand, and exhale slowly through your mouth.</p>
+            <p data-i18n="groundingDesc21"><strong data-i18n="groundingDesc2">Take a few deep breaths to begin.</strong> Inhale slowly through your nose, feel your abdomen expand, and exhale slowly through your mouth.</p>
             <p data-i18n="groundingDesc3">Now, silently or aloud, acknowledge:</p>
             <ul class="list-disc list-inside space-y-3 pl-4 text-gray-600">
                 <li data-i18n="groundingSee"><strong>5 things you can SEE:</strong> Look around you and notice five distinct objects.</li>
