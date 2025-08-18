@@ -177,7 +177,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 nav.classList.remove('hidden');
                 signOutButton.classList.remove('hidden');
-                navigateTo('home');
+
+                // Lire la section depuis l'URL ou utiliser 'home' par défaut
+                const section = window.location.hash.substring(1) || 'home';
+                navigateTo(section);
             } else {
                 // User is signed out
                 userId = null;
@@ -295,6 +298,10 @@ document.addEventListener('DOMContentLoaded', () => {
         loadingIndicator.classList.remove('hidden');
         mainContent.innerHTML = ''; 
 
+        // Mettre à jour l'ancre de l'URL
+        window.location.hash = section;
+
+
         navLinks.forEach(nav => nav.classList.remove('neumorphic-nav-active', 'text-orange-600'));
         const activeLink = document.querySelector(`.nav-link[data-section="${section}"]`);
         if (activeLink) {
@@ -392,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <textarea id="journalEntry" class="w-full h-64 p-4 neumorphic-inset text-gray-700 placeholder-gray-500 focus:outline-none" data-i18n-placeholder="Write here" placeholder="Begin your reflections here..."></textarea>
                 <button id="saveJournalEntry" class="mt-6 neumorphic-button text-gray-800 font-bold py-3 px-6" data-i18n="saveEntry">Save Entry</button>
-                <div id="journalStatus" class="mt-4 text-green-600"></div>
+                <div id="journalStatus" class="mt-4 text-green-600" data-i18n ="jourstats"></div>
             </div>
         `;
 
@@ -417,7 +424,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         const entryText = journalEntry.value.trim();
-        const promptText = journalPrompt.value;
+        
+        let promptText = "Free-form";
+        if (journalPrompt.value) {
+            const selectedOption = journalPrompt.options[journalPrompt.selectedIndex];
+            promptText = selectedOption.innerHTML;
+        }
+
+
 
         if (entryText === "") {
             journalStatus.textContent = 'Entry cannot be empty.';
@@ -529,13 +543,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (backButton) backButton.addEventListener('click', renderExercisesPage);
 
         const rootForm = document.getElementById('rootExerciseForm');
-        if (rootForm) rootForm.addEventListener('submit', (e) => handleExerciseSubmit(e, 'rootExerciseForm', 'Getting to the Root'));
+        if (rootForm) rootForm.addEventListener('submit', (e) => handleExerciseSubmit(e, 'rootExerciseForm', 'rootTitle'));
 
         const innerChildForm = document.getElementById('innerChildExerciseForm');
-        if (innerChildForm) innerChildForm.addEventListener('submit', (e) => handleExerciseSubmit(e, 'innerChildExerciseForm', 'Inner Child Connection'));
+        if (innerChildForm) innerChildForm.addEventListener('submit', (e) => handleExerciseSubmit(e, 'innerChildExerciseForm', 'icTitle'));
 
         const greeneForm = document.getElementById('greeneRepressionForm');
-        if (greeneForm) greeneForm.addEventListener('submit', (e) => handleExerciseSubmit(e, 'greeneRepressionForm', 'The Law of Repression'));
+        if (greeneForm) greeneForm.addEventListener('submit', (e) => handleExerciseSubmit(e, 'greeneRepressionForm', 'greeneTitle'));
         
         // ** FIX: Cache new English text and re-apply language settings **
         cacheInitialEnglishText();
@@ -697,6 +711,11 @@ function getGroundingExerciseHTML() {
         const form = document.getElementById(formId);
         if (!form) return;
 
+        // Find the title element using the key and get its current (translated) text
+        const titleElement = document.querySelector(`[data-i18n="${exerciseTitle}"]`);
+        const localizedTitle = titleElement ? titleElement.innerHTML : exerciseTitle; // Fallback to key if not found
+
+
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
         
@@ -708,7 +727,7 @@ function getGroundingExerciseHTML() {
         }
         
         if (Object.keys(cleanData).length > 0) {
-             saveExerciseResponse(exerciseTitle, cleanData, formId);
+             saveExerciseResponse(localizedTitle, cleanData, formId);
         } else {
             const statusElement = form.querySelector('#exerciseStatus');
             if (statusElement) {
@@ -791,7 +810,6 @@ function getGroundingExerciseHTML() {
             let hasContent = false;
             if (!journalSnapshot.empty) {
                 hasContent = true;
-                entriesList.innerHTML += '<h3 class="text-2xl font-cinzel text-orange-500 mt-4 mb-2" data-i18n="jourentry">Journal Entries</h3>';
                 journalSnapshot.forEach(doc => {
                     const entry = doc.data();
                     const entryDiv = document.createElement('div');
@@ -822,7 +840,7 @@ function getGroundingExerciseHTML() {
                     for (const key in response.data) {
                         const sanitizedKey = key.replace(/_/g, ' ').replace(/</g, "&lt;").replace(/>/g, "&gt;");
                         const sanitizedValue = String(response.data[key]).replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>");
-                        dataHtml += `<li class="text-gray-600"><strong class="text-orange-400 capitalize">${sanitizedKey}:</strong> ${sanitizedValue}</li>`;
+                        dataHtml += `<li class="text-gray-600"><strong class="text-orange-400 capitalize" >${sanitizedKey}:</strong> ${sanitizedValue}</li>`;
                     }
                     dataHtml += '</ul>';
                     responseDiv.innerHTML = `
