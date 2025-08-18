@@ -791,7 +791,7 @@ function getGroundingExerciseHTML() {
             let hasContent = false;
             if (!journalSnapshot.empty) {
                 hasContent = true;
-                entriesList.innerHTML += '<h3 class="text-2xl font-cinzel text-orange-500 mt-4 mb-2">Journal Entries</h3>';
+                entriesList.innerHTML += '<h3 class="text-2xl font-cinzel text-orange-500 mt-4 mb-2" data-i18="jourentry" >Journal Entries</h3>';
                 journalSnapshot.forEach(doc => {
                     const entry = doc.data();
                     const entryDiv = document.createElement('div');
