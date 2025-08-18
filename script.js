@@ -49,15 +49,17 @@ document.addEventListener('DOMContentLoaded', () => {
     function cacheInitialEnglishText() {
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
-            translationsCache.en[key] = el.innerHTML;
-            //if (!translationsCache.en[key]) {}
+            if (!translationsCache.en[key]) {
+                translationsCache.en[key] = el.innerHTML;  
+        }
         });
 
         // Cache placeholder text
         document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
             const key = el.getAttribute('data-i18n-placeholder');
-            translationsCache.en[key] = el.getAttribute('placeholder');
-            //if (!translationsCache.en[key]) {}
+            if (!translationsCache.en[key]) {
+                translationsCache.en[key] = el.getAttribute('data-i18n-placeholder');
+            }
         });
     }
     async function translateText(texts, targetLang) {
@@ -388,7 +390,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <option value="Think about a recent group decision. Did you feel pressure to conform? How did the 'group mind' differ from your own private thoughts? (R. Greene)" data-i18n="prompt6">How did group pressure affect your thinking in a recent decision? (R. Greene)</option>
                     </select>
                 </div>
-                <textarea id="journalEntry" class="w-full h-64 p-4 neumorphic-inset text-gray-700 placeholder-gray-500 focus:outline-none" data-i18n-placeholder="journalPlaceholder" placeholder="Begin your reflections here..."></textarea>
+                <textarea id="journalEntry" class="w-full h-64 p-4 neumorphic-inset text-gray-700 placeholder-gray-500 focus:outline-none" data-i18n-placeholder="Write here" placeholder="Begin your reflections here..."></textarea>
                 <button id="saveJournalEntry" class="mt-6 neumorphic-button text-gray-800 font-bold py-3 px-6" data-i18n="saveEntry">Save Entry</button>
                 <div id="journalStatus" class="mt-4 text-green-600"></div>
             </div>
@@ -456,15 +458,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderExercisesPage() {
         if (!mainContent) return;
+
+
+        const exercises = [
+            { id: 'root_exercise', titleKey: 'ex_root_title', descKey: 'ex_root_desc', title: 'Getting to the Root', desc: 'Identify and process triggers in real-time.' },
+            { id: 'inner_child_exercise', titleKey: 'ex_inner_child_title', descKey: 'ex_inner_child_desc', title: 'Inner Child Connection', desc: 'Acknowledge and nurture your inner child.' },
+            { id: 'greene_repression_exercise', titleKey: 'ex_greene_title', descKey: 'ex_greene_desc', title: 'The Law of Repression', desc: "Decode the shadow in others and yourself, based on Robert Greene's principles." },
+            { id: 'eft_setup_exercise', titleKey: 'ex_eft_title', descKey: 'ex_eft_desc', title: 'EFT Tapping - Basic Setup', desc: 'Learn the Emotional Freedom Technique setup statement.' },
+            { id: 'grounding_exercise', titleKey: 'ex_grounding_title', descKey: 'ex_grounding_desc', title: 'Simple Grounding Technique', desc: 'Center yourself and connect to the present moment.' }
+        ];
+
+        // Manually populate the cache with the pristine English text to ensure consistency
+        exercises.forEach(ex => {
+            if (!translationsCache.en[ex.titleKey]) translationsCache.en[ex.titleKey] = ex.title;
+            if (!translationsCache.en[ex.descKey]) translationsCache.en[ex.descKey] = ex.desc;
+            const buttonKey = `beginExercise-${ex.id}`;
+            if (!translationsCache.en[buttonKey]) translationsCache.en[buttonKey] = 'Begin Exercise';
+        });
+
+
+
+
         mainContent.innerHTML = `
             <div class="p-6 md:p-8 neumorphic-card-outset">
                 <h2 class="text-4xl font-cinzel text-orange-600 mb-8" data-i18n="exercisesTitle">Shadow Work Exercises</h2>
                 <div class="space-y-10">
-                    ${renderExerciseCard("Getting to the Root", "Identify and process triggers in real-time.", "root_exercise")}
-                    ${renderExerciseCard("Inner Child Connection", "Acknowledge and nurture your inner child.", "inner_child_exercise")}
-                    ${renderExerciseCard("The Law of Repression", "Decode the shadow in others and yourself, based on Robert Greene's principles.", "greene_repression_exercise")}
-                    ${renderExerciseCard("EFT Tapping - Basic Setup", "Learn the Emotional Freedom Technique setup statement.", "eft_setup_exercise")}
-                    ${renderExerciseCard("Simple Grounding Technique", "Center yourself and connect to the present moment.", "grounding_exercise")}
+
+                    ${exercises.map(ex => renderExerciseCard(ex.titleKey, ex.descKey, ex.id)).join('')}
+
                 </div>
             </div>
         `;
@@ -532,15 +553,15 @@ function getRootExerciseHTML() {
         <form id="rootExerciseForm" class="space-y-6">
             <div>
                 <label for="trigger" class="block text-xl font-cinzel text-orange-500 mb-2" data-i18n="rootQ1">1. What is triggering my shadow right now?</label>
-                <textarea name="trigger" class="w-full p-3 neumorphic-inset text-gray-700 h-24 focus:outline-none" data-i18n-placeholder="Describe the situation, person, or event..."></textarea>
+                <textarea name="trigger" id="trigger" class="w-full p-3 neumorphic-inset text-gray-700 h-24 focus:outline-none" data-i18n-placeholder="Describe the situation, person, or event..."></textarea>
             </div>
             <div>
                 <label for="thoughts" class="block text-xl font-cinzel text-orange-500 mb-2" data-i18n="rootQ2">2. What thoughts am I having?</label>
-                <textarea name="thoughts" class="w-full p-3 neumorphic-inset text-gray-700 h-24 focus:outline-none" data-i18n-placeholder="List the thoughts, judgments, or assumptions..."></textarea>
+                <textarea name="thoughts" id="thoughts" class="w-full p-3 neumorphic-inset text-gray-700 h-24 focus:outline-none" data-i18n-placeholder="List the thoughts, judgments, or assumptions..."></textarea>
             </div>
             <div>
                 <label for="emotions" class="block text-xl font-cinzel text-orange-500 mb-2" data-i18n="rootQ3">3. What emotions am I experiencing?</label>
-                <textarea name="emotions" class="w-full p-3 neumorphic-inset text-gray-700 h-24 focus:outline-none" data-i18n-placeholder="Name the feelings (e.g., anger, sadness, fear, shame)..."></textarea>
+                <textarea name="emotions" id="emotions" class="w-full p-3 neumorphic-inset text-gray-700 h-24 focus:outline-none" data-i18n-placeholder="Name the feelings (e.g., anger, sadness, fear, shame)..."></textarea>
             </div>
             <button type="submit" class="neumorphic-button text-gray-800 font-bold py-3 px-6" data-i18n="saveReflection">Save Reflection</button>
             <div id="exerciseStatus" class="mt-4 text-green-600"></div>
@@ -813,13 +834,13 @@ function getGroundingExerciseHTML() {
             }
 
             if (!hasContent) {
-                entriesList.innerHTML = '<p class="text-gray-600">No journal entries or exercise reflections found.</p>';
+                entriesList.innerHTML = '<p class="text-gray-600" data-i18 ="Jentry">No journal entries or exercise reflections found.</p>';
             }
 
 
         } catch (error) {
             console.error("Error fetching entries: ", error);
-            entriesList.innerHTML = '<p class="text-red-700">Error fetching entries. See console.</p>';
+            entriesList.innerHTML = '<p class="text-red-700" data-i18 ="fentry">Error fetching entries. See console.</p>';
         } finally {
             loadingIndicator.classList.add('hidden');
         }
