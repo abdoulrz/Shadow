@@ -17,18 +17,24 @@
     <div class="content-wrapper w-full max-w-5xl mx-auto p-4 sm:p-6 md:p-8 rounded-xl">
         <header class="mb-8 text-center py-6">
             <div class="flex justify-between items-start">
-                <div class="w-1/3 flex justify-start">
+                <div class="w-1/4 flex justify-start">
                     <div id="lang-switcher" class="flex gap-2">
                         <button class="lang-btn neumorphic-button-secondary text-sm" type="button" data-lang="en">EN</button>
                         <button class="lang-btn neumorphic-button-secondary text-sm" type="button" data-lang="fr">FR</button>
                         <button class="lang-btn neumorphic-button-secondary text-sm" type="button" data-lang="es">ES</button>
                     </div>
                 </div>
-                <div class="w-1/3">
+                <div class="w-1/4">
                     <h1 class="text-5xl md:text-6xl font-cinzel text-orange-600 mb-2">Shadow</h1>
                     <p class="text-lg mt-1" data-i18n="appSubtitle">Your personal guide for intra-exploration.</p>
                 </div>
-                <div class="w-1/3 flex justify-end">
+                <aside class="text-sm mt-2 w-1/4" data-i18n="appDescription">
+                        <p class="text-lg mt-1"><stron class = "font-cinzel text-orange-600 mb-2">Name: </stron>Abdoul Razack Zemane</p>
+                        <p class="text-lg mt-1"><stron class = "font-cinzel text-orange-600 mb-2">Date: </stron>20 august 2025</p>
+                        <p class="text-lg mt-1"><stron class = "font-cinzel text-orange-600 mb-2">City/Country: </stron>Palma de Mallorca, Spain</p>
+                </aside>
+                
+                <div class="w-1/4 flex justify-end">
                      <button id="signOutButton" class="hidden neumorphic-button-secondary text-sm" type="button" data-i18n="signOut">Sign Out</button>
                 </div>
             </div>
@@ -44,7 +50,7 @@
                 <li><a href="#" class="nav-link text-lg font-semibold" data-section="entries" data-i18n="navEntries">My Entries</a></li>
             </ul>
         </nav>
-
+        
         <main id="mainContent" class="min-h-[300px]">
             <!-- Content will be loaded here by JavaScript -->
         </main>

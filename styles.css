@@ -154,3 +154,7 @@ footer p { color: var(--neumorphic-text-subtle); }
     color: var(--neumorphic-text-accent);
     font-weight: bold;
 }
+
+aside{
+    margin-left: 50px;
+}
