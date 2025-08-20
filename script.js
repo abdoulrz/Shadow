@@ -327,7 +327,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mainContent.innerHTML = `
             <div class="text-center p-8 md:p-16 neumorphic-card-outset stamp-bg relative">
                 <div class="relative z-10">
-                    <h1 class="text-4xl font-cinzel text-orange-600 mb-6" data-i18n="welcomeTitle">Welcome to Shadow</h1>
+                    <h1 class="text-4xl font-cinzel text-orange-600 mb-6" data-i18n="welcomeTitle">Welcome to <i>Shadow</i></h1>
                     <p class="text-xl text-gray-700 mb-8" data-i18n="welcomeText">
                         Embark on a journey of self-discovery and integration. Explore the depths of your psyche, understand your shadows, and cultivate a more authentic self.
                     </p>
@@ -403,8 +403,6 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
 
-        //const journalPromptSelect = document.getElementById('journalPrompt');
-        //const journalEntryTextarea = document.getElementById('journalEntry');
         
 
         document.getElementById('saveJournalEntry').addEventListener('click', saveJournalEntry);
